@@ -29,7 +29,7 @@ type Config struct {
 		Username string `envconfig:"DB_USERNAME"`
 		Password string `envconfig:"DB_PASSWORD"`
 		Hostname string `envconfig:"DB_HOSTNAME"`
-		Port     string `envconfig:"DB_PORT"`
+		Port     int    `envconfig:"DB_PORT"`
 	}
 }
 
