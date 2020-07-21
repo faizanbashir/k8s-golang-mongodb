@@ -17,6 +17,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
+// The Config struct contains Application configuration
 type Config struct {
 	Server struct {
 		Host         string        `envconfig:"SERVER_HOST"`
@@ -33,6 +34,7 @@ type Config struct {
 	}
 }
 
+// A Todo struct contains data like todo, creation and completion date
 type Todo struct {
 	ID          primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Todo        string             `bson:"todo,omitempty" json:"todo"`
