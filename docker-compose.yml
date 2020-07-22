@@ -1,0 +1,51 @@
+version: '3.3'
+
+services:
+
+  todo:
+    container_name: todo
+    image: faizanbashir.me/todo:latest
+    restart: on-failure
+    tty: true
+    environment:
+      DB_SSL: ${DB_SSL}
+      DB_PORT: ${DB_PORT}
+      DB_HOSTNAME: ${DB_HOSTNAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SERVER_PORT: ${SERVER_PORT}
+      SERVER_HOST: ${SERVER_HOST}
+      SERVER_READ_TIMEOUT: ${SERVER_READ_TIMEOUT}
+      SERVER_WRITE_TIMEOUT: ${SERVER_WRITE_TIMEOUT}
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:4.0.2
+    container_name: mongodb
+    restart: on-failure
+    command: mongod --auth
+    ports:
+      - "27017:27017"
+    environment:
+      MONGODB_DATABASE: ${DB_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGODB_DATA_DIR: ${DB_DATA_DIR}
+      MONDODB_LOG_DIR: ${DB_LOG_DIR}
+    volumes:
+      - todo-data:/data/db
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  todo-data:
+    driver: local
