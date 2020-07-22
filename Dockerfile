@@ -30,7 +30,7 @@ LABEL maintainer="faizanbashir" \
 RUN addgroup -S app \
   && adduser -S -g app app \
   && apk --no-cache add \
-  curl openssl netcat-openbsd
+  curl openssl netcat-openbsd iputils
 
 WORKDIR /home/app
 
