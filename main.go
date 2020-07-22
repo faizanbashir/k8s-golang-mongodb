@@ -31,6 +31,7 @@ type Config struct {
 		Password string `envconfig:"DB_PASSWORD"`
 		Hostname string `envconfig:"DB_HOSTNAME"`
 		Port     int    `envconfig:"DB_PORT"`
+		SSL      string `envconfig:"DB_SSL"`
 	}
 }
 
@@ -104,7 +105,7 @@ func makeMuxRouter() http.Handler {
 }
 
 func connectDB() error {
-	connectionString := fmt.Sprintf("mongodb://%s:%s@%s:%d/%s?ssl=true&authSource=admin", cfg.Database.Username, cfg.Database.Password, cfg.Database.Hostname, cfg.Database.Port, cfg.Database.DB)
+	connectionString := fmt.Sprintf("mongodb://%s:%s@%s:%d/%s?ssl=%s&authSource=admin", cfg.Database.Username, cfg.Database.Password, cfg.Database.Hostname, cfg.Database.Port, cfg.Database.DB, cfg.Database.SSL)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
