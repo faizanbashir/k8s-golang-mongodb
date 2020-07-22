@@ -87,7 +87,7 @@ func run() error {
 func makeMuxRouter() http.Handler {
 	router := mux.NewRouter()
 
-	api := router.PathPrefix("/api/v1").Subrouter()
+	api := router.PathPrefix("/todo").Subrouter()
 	api.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
@@ -98,8 +98,8 @@ func makeMuxRouter() http.Handler {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{"status": "OK"}`))
 	}).Methods(http.MethodGet)
-	api.HandleFunc("/todo/list", getTodo).Methods(http.MethodGet)
-	api.HandleFunc("/todo/create", addTodo).Methods(http.MethodPost)
+	api.HandleFunc("/list", getTodo).Methods(http.MethodGet)
+	api.HandleFunc("/create", addTodo).Methods(http.MethodPost)
 	return api
 }
 
