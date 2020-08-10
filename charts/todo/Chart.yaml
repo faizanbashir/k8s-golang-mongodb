@@ -4,9 +4,9 @@ appVersion: 1.0.0
 name: todo
 engine: gotpl
 description: Todo Helm chart for Kubernetes
-home: https://github.com/faizanbashir/k8s-golang-nginx-mongodb
+home: https://github.com/faizanbashir/k8s-golang-mongodb
 maintainers:
 - email: hello@faizanbashir.me
-  name: faizanbassir
+  name: faizanbashir
 sources:
-- https://github.com/faizanbashir/k8s-golang-nginx-mongodb
+- https://github.com/faizanbashir/k8s-golang-mongodb
