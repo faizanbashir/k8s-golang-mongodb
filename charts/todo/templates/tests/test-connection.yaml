@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ template "todo.fullname" . }}-test-connection
+  labels:
+    app: "todo"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "todo.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
