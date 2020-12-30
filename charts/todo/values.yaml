@@ -1,0 +1,94 @@
+# Default values for todo.
+
+replicaCount: 1
+maintainer: faizanbashir
+
+image:
+  repository: faizanbashir/todo
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
+  httpPort: 8080
+
+# metrics-server add-on required
+hpa:
+  enabled: true
+  maxReplicas: 10
+  # average total CPU usage per pod (1-100)
+  cpu: 80
+  # average memory usage per pod (100Mi-1Gi)
+  memory:
+  # average http requests per second per pod (k8s-prometheus-adapter)
+  requests:
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  enabled: false
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+ingress:
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /*
+  hosts: []
+#    - podinfo.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 1Gi
+  requests:
+    cpu: 1m
+    memory: 1Gi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+annotations: {}
+
+env:
+  configMaps:
+    DB_SSL: ""
+    DB_PORT: ""
+    DB_HOSTNAME: ""
+    DB_USERNAME: ""
+    DB_DATABASE: ""
+    SERVER_PORT: ""
+    SERVER_HOST: ""
+    SERVER_READ_TIMEOUT: ""
+    SERVER_WRITE_TIMEOUT: ""
+  secrets:
+    DB_PASSWORD: ""
+
+extraEnvs: []
+
+livenessProbe:
+  httpGet:
+    path: /todo/healthz
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  failureThreshold: 8
+
+readinessProbe:
+  httpGet:
+    path: /todo/healthz
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 3
+  failureThreshold: 10

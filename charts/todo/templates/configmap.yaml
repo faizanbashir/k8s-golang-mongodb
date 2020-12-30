@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "todo.fullname" . }}
+  labels:
+    {{- include "todo.labels" . | nindent 4}}
+  annotations:
+    {{- include "todo.annotations" . | nindent 4 }}
+data:
+{{- range $key, $value := .Values.env.configMaps }}
+  {{ tpl $key $ }}: {{ tpl $value $ | quote }}
+{{- end }}
